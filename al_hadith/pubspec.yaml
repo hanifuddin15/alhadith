@@ -79,5 +79,9 @@ flutter:
         - asset: assets/fonts/kalpurush.ttf
         - asset: assets/fonts/kalpurush ANSI.ttf
         - asset: assets/fonts/font_kfgq.ttf
+    - family: KFGQ
+      fonts:
+        - asset: assets/fonts/font_kfgq.ttf
+  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

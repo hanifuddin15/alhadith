@@ -13,15 +13,14 @@ class HadithPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.kGreenColor,
-        shape:  RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        bottom: Radius.circular(30),
-      ),
-    ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.kWhite),
-          onPressed: (){}
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new, color: AppColors.kWhite),
+            onPressed: () {}),
         title: GetBuilder<HadithController>(
           builder: (controller) {
             var firstBookItem = controller.itemList.firstWhere(
@@ -40,15 +39,28 @@ class HadithPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: firstBookItem != null
                       ? [
-                          Text(' ${firstBookItem.data['title'] ?? ''}'),
-                          Text('ওহীর সূচনা অধ্যায়')
+                          Text(
+                            ' ${firstBookItem.data['title'] ?? ''}',
+                            style: TextStyle(
+                                fontFamily: 'Kalpurush',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.kWhite),
+                          ),
+                          Text(
+                            ' ওহীর সূচনা অধ্যায়',
+                            style: TextStyle(
+                                fontFamily: 'Kalpurush',
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.kWhite),
+                          )
                         ]
                       : [],
                 ),
                 IconButton(
-                  icon: Icon(Icons.tune_outlined, color: AppColors.kWhite),
-                  onPressed: () {}
-                ),
+                    icon: Icon(Icons.tune_outlined, color: AppColors.kWhite),
+                    onPressed: () {}),
               ],
             );
           },
@@ -87,87 +99,204 @@ class HadithPage extends StatelessWidget {
                   var firstHadithBn = relatedHadiths.isNotEmpty
                       ? relatedHadiths[0].data['bn'] ?? ''
                       : '';
+                  var hadithNarrator = relatedHadiths.isNotEmpty
+                      ? relatedHadiths[0].data['narrator'] ?? ''
+                      : '';
 
                   return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      color: const Color.fromARGB(255, 236, 232, 232),
+                    ),
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${item.data['number'] ?? ''} ',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              TextSpan(
-                                text: '${item.data['title'] ?? ''}',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
                           ),
-                        ),
-                        Divider(color: Colors.red),
-                        Container(
-                          color: Colors.blue,
-                          padding: EdgeInsets.all(10),
-                          child: Text('${item.data['preface'] ?? ''}'),
-                        ),
-                        Container(
-                          color: Colors.red,
-                          padding: EdgeInsets.all(10),
-                          child: Row(
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10, top: 5, bottom: 5),
+                          child: Column(
                             children: [
-                              HexagonWidget.pointy(
-                                cornerRadius: 10,
-                                width: 40,
-                                color: Colors.green,
-                                elevation: 8,
-                                child: Center(child: Text('B')),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: relatedBooks.map((bookItem) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            ' ${bookItem.data['title'] ?? ''}'),
-                                        Text(
-                                            'হাদিস: ${bookItem.data['id'].toString() ?? ''}'),
-                                      ],
-                                    );
-                                  }).toList(),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '${item.data['number'] ?? ''} ',
+                                      style: TextStyle(
+                                          color: AppColors.kGreenColor,
+                                          fontFamily: 'Kalpurush',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: '${item.data['title'] ?? ''}',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Kalpurush',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
                               ),
+                              Divider(
+                                color: const Color.fromARGB(255, 236, 232, 232),
+                              ),
                               Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.green),
-                                  child: Text(' ${firstHadithGrade}')),
-                              PopupMenuButton<String>(
-                                onSelected: (String value) {
-                                  // Handle the selection action here
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return {'Option 1', 'Option 2', 'Option 3'}
-                                      .map((String choice) {
-                                    return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: Text(choice),
-                                    );
-                                  }).toList();
-                                },
-                                icon: Icon(Icons.more_vert),
+                                color: Colors.white,
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  '${item.data['preface'] ?? ''}',
+                                  style: TextStyle(
+                                      fontFamily: 'Kalpurush',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        if (firstHadithAr.isNotEmpty) Text(' ${firstHadithAr}'),
-                        if (firstHadithBn.isNotEmpty) Text(' ${firstHadithBn}'),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  HexagonWidget.pointy(
+                                    cornerRadius: 10,
+                                    width: 40,
+                                    color: Color(0xFF24DF0C),
+                                    elevation: 0,
+                                    child: Center(
+                                        child: Text(
+                                      'B',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    )),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: relatedBooks.map((bookItem) {
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                                ' ${bookItem.data['title'] ?? ''}',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Kalpurush',
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Text(
+                                                ' হাদিস: ${bookItem.data['id'].toString() ?? ''}',
+                                                style: TextStyle(
+                                                    color:
+                                                        AppColors.kGreenColor,
+                                                    fontFamily: 'Kalpurush',
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(
+                                          right: 15,
+                                          left: 10,
+                                          top: 10,
+                                          bottom: 10),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: AppColors.kGreenColor),
+                                      child: Text(' ${firstHadithGrade}',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'Kalpurush',
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold))),
+                                  PopupMenuButton<String>(
+                                    onSelected: (String value) {
+                                      // Handle the selection action here
+                                    },
+                                    itemBuilder: (BuildContext context) {
+                                      return {
+                                        'Option 1',
+                                        'Option 2',
+                                        'Option 3'
+                                      }.map((String choice) {
+                                        return PopupMenuItem<String>(
+                                          value: choice,
+                                          child: Text(choice),
+                                        );
+                                      }).toList();
+                                    },
+                                    icon: Icon(
+                                      Icons.more_vert,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20, left: 10),
+                                child: Text(' ${firstHadithAr}',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'KGFQ',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20, left: 10),
+                                child: Text('${hadithNarrator} থেকে বর্ণিত:',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: AppColors.kGreenColor,
+                                        fontFamily: 'Kalpurush',
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              SizedBox(height:20),
+                               Padding(
+                                padding: EdgeInsets.only(right: 20, left: 10),
+                                child: Text('${firstHadithBn}',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.black
+                        ,
+                                        fontFamily: 'Kalpurush',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500)),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   );
