@@ -9,7 +9,7 @@ class DownwardCurveClipper extends CustomClipper<Path> {
    
     path.quadraticBezierTo(
       size.width *0.5, 
-      size.height - 40, 
+      size.height - 20, 
      size.width , 
       size.height, 
     );
