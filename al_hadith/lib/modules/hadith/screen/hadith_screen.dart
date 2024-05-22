@@ -1,9 +1,11 @@
 import 'package:al_hadith/core/utils/app_colors/app_colors.dart';
 import 'package:al_hadith/models/hadith_item_model.dart';
 import 'package:al_hadith/modules/hadith/controller/hadith_controller.dart';
+import 'package:al_hadith/widgets/negative_curve_clipper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexagon/hexagon.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HadithPage extends StatelessWidget {
   final HadithController hadithController = Get.put(HadithController());
@@ -12,12 +14,16 @@ class HadithPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.kGreenColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
+        toolbarHeight: 130.h,
+        flexibleSpace: ClipPath(
+          clipper:DownwardCurveClipper() ,
+          child: Container(
+            height:250.h,
+            width: MediaQuery.of(context).size.width,color: AppColors.kGreenColor,
           ),
         ),
+        backgroundColor: Colors.transparent,
+        
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new, color: AppColors.kWhite),
             onPressed: () {}),
@@ -34,6 +40,7 @@ class HadithPage extends StatelessWidget {
 
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +50,7 @@ class HadithPage extends StatelessWidget {
                             ' ${firstBookItem.data['title'] ?? ''}',
                             style: TextStyle(
                                 fontFamily: 'Kalpurush',
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.kWhite),
                           ),
@@ -51,7 +58,7 @@ class HadithPage extends StatelessWidget {
                             ' ওহীর সূচনা অধ্যায়',
                             style: TextStyle(
                                 fontFamily: 'Kalpurush',
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.kWhite),
                           )
@@ -87,9 +94,13 @@ class HadithPage extends StatelessWidget {
                   var relatedBooks = controller.itemList
                       .where((element) => element.type == HadithItems.books)
                       .toList();
+                      
                   var relatedHadiths = controller.itemList
                       .where((element) => element.type == HadithItems.hadith)
                       .toList();
+
+                  var abbreviationCode = relatedBooks.isNotEmpty ?relatedBooks[0].data['abvr_code'] ?? ''
+                      : '';
                   var firstHadithGrade = relatedHadiths.isNotEmpty
                       ? relatedHadiths[0].data['grade'] ?? ''
                       : '';
@@ -106,24 +117,26 @@ class HadithPage extends StatelessWidget {
                   return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20)),
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r)),
                       color: const Color.fromARGB(255, 236, 232, 232),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    padding: REdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(15.r),
                             color: Colors.white,
                           ),
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 5, bottom: 5),
+                          padding: REdgeInsets.only(
+                              left: 10, right: 10, top: 20, bottom: 5),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               RichText(
+                                textAlign: TextAlign.center,
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
@@ -131,7 +144,7 @@ class HadithPage extends StatelessWidget {
                                       style: TextStyle(
                                           color: AppColors.kGreenColor,
                                           fontFamily: 'Kalpurush',
-                                          fontSize: 18,
+                                          fontSize: 18.sp,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     TextSpan(
@@ -139,7 +152,7 @@ class HadithPage extends StatelessWidget {
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Kalpurush',
-                                          fontSize: 18,
+                                          fontSize: 18.sp,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -150,12 +163,13 @@ class HadithPage extends StatelessWidget {
                               ),
                               Container(
                                 color: Colors.white,
-                                padding: EdgeInsets.all(10),
+                                padding: REdgeInsetsDirectional.all(10),
                                 child: Text(
                                   '${item.data['preface'] ?? ''}',
+                                  textAlign: TextAlign.start,
                                   style: TextStyle(
                                       fontFamily: 'Kalpurush',
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
                                 ),
@@ -163,34 +177,32 @@ class HadithPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
+                       15.verticalSpace,
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(15.r),
                             color: Colors.white,
                           ),
-                          padding: EdgeInsets.only(left: 10, top: 5, bottom: 5),
+                          padding: REdgeInsets.only(left: 10, top: 20, bottom: 5),
                           child: Column(
                             children: [
                               Row(
                                 children: [
                                   HexagonWidget.pointy(
-                                    cornerRadius: 10,
-                                    width: 40,
+                                    cornerRadius: 10.r,
+                                    width: 40.w,
                                     color: Color(0xFF24DF0C),
                                     elevation: 0,
                                     child: Center(
                                         child: Text(
-                                      'B',
+                                      '$abbreviationCode',
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     )),
                                   ),
-                                  SizedBox(width: 10),
+                                 10.horizontalSpace,
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
@@ -205,16 +217,16 @@ class HadithPage extends StatelessWidget {
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontFamily: 'Kalpurush',
-                                                    fontSize: 18,
+                                                    fontSize: 18.sp,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                             Text(
-                                                ' হাদিস: ${bookItem.data['id'].toString() ?? ''}',
+                                                ' হাদিস: ${bookItem.data['id'].toString() == '1' ?  '১' : ''}',
                                                 style: TextStyle(
                                                     color:
                                                         AppColors.kGreenColor,
                                                     fontFamily: 'Kalpurush',
-                                                    fontSize: 18,
+                                                    fontSize: 18.sp,
                                                     fontWeight:
                                                         FontWeight.bold)),
                                           ],
@@ -223,24 +235,24 @@ class HadithPage extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                      padding: EdgeInsets.only(
+                                      padding: REdgeInsets.only(
                                           right: 15,
                                           left: 10,
                                           top: 10,
                                           bottom: 10),
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(20.r),
                                           color: AppColors.kGreenColor),
                                       child: Text(' ${firstHadithGrade}',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontFamily: 'Kalpurush',
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                               fontWeight: FontWeight.bold))),
                                   PopupMenuButton<String>(
                                     onSelected: (String value) {
-                                      // Handle the selection action here
+                                    
                                     },
                                     itemBuilder: (BuildContext context) {
                                       return {
@@ -261,37 +273,38 @@ class HadithPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 15),
+                             15.verticalSpace,
                               Padding(
-                                padding: EdgeInsets.only(right: 20, left: 10),
+                                padding: REdgeInsets.only(right: 20, left: 10),
                                 child: Text(' ${firstHadithAr}',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'KGFQ',
-                                        fontSize: 18,
+                                        fontSize: 18.sp,
                                         fontWeight: FontWeight.bold)),
                               ),
+                            20.verticalSpace,
                               Padding(
-                                padding: EdgeInsets.only(right: 20, left: 10),
+                                padding: REdgeInsets.only(right: 20, left: 10),
                                 child: Text('${hadithNarrator} থেকে বর্ণিত:',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: AppColors.kGreenColor,
                                         fontFamily: 'Kalpurush',
-                                        fontSize: 17,
+                                        fontSize: 17.sp,
                                         fontWeight: FontWeight.bold)),
                               ),
-                              SizedBox(height:20),
+                          20.verticalSpace,
                                Padding(
-                                padding: EdgeInsets.only(right: 20, left: 10),
+                                padding: REdgeInsets.only(right: 20, left: 10),
                                 child: Text('${firstHadithBn}',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         color: Colors.black
                         ,
                                         fontFamily: 'Kalpurush',
-                                        fontSize: 15,
+                                        fontSize: 15.sp,
                                         fontWeight: FontWeight.w500)),
                               ),
                             ],

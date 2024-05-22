@@ -29,8 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  easy_screenutil: ^0.0.2
   flutter:
     sdk: flutter
+  flutter_screenutil: ^5.9.1
   get: ^4.6.6
   hexagon: ^0.2.0
   modal_progress_hud_nsn: ^0.5.1
@@ -82,6 +84,5 @@ flutter:
     - family: KFGQ
       fonts:
         - asset: assets/fonts/font_kfgq.ttf
-  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
